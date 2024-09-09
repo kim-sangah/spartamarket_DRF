@@ -24,6 +24,6 @@ class Profile(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, username):
-        account = self.get_object_or_404(Account, pk=username)
+        account = get_object_or_404(Account, username=username)
         serializer = ProfileSerializer(account)
         return Response(serializer.data)

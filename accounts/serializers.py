@@ -14,12 +14,6 @@ class AccountSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
-# 계정 로그인
-class loginSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Account
-        fields = ['username', 'password',]
-
 
 # 계정 프로필
 class ProfileSerializer(serializers.ModelSerializer):

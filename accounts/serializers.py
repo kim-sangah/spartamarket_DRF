@@ -7,12 +7,18 @@ class AccountSerializer(serializers.ModelSerializer):
         model = Account
         fields = ['username', 'password', 'email', 'name', 'nickname', 'birthday', 'gender', 'introduction',]
 
+    def create(self, validated_data):
+        password = validated_data.pop('password')
+        user = Account(**validated_data)
+        user.set_password(password)
+        user.save()
+        return user
 
 # 계정 로그인
 class loginSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
-        fields = ['username', 'password', 'email', 'name', 'nickname', 'birthday', 'gender', 'introduction',]
+        fields = ['username', 'password',]
 
 
 # 계정 프로필

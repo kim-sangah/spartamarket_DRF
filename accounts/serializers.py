@@ -3,6 +3,7 @@ from .models import Account
 
 # 계정 회원가입
 class AccountSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True,)
     class Meta:
         model = Account
         fields = ['username', 'password', 'email', 'name', 'nickname', 'birthday', 'gender', 'introduction',]

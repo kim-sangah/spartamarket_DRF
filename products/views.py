@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404
 from .models import Product
 from .serializers import ProductSerializer
 from rest_framework import status
+from rest_framework import permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -28,7 +29,7 @@ class ProductAPIView(APIView):
     def post(self, request):
         serializer = ProductSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            serializer.save()
+            serializer.save(seller=request.user) # 사칭할 수 없게 지정
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
@@ -57,6 +58,9 @@ class ProductDetailAPIView(APIView):
     # 물건 상세 삭제
     def delete(self, request, productId):
         products = self.get_object(productId)
+        if products.seller != request.user:
+            data = {"message": f"작성자만 삭제 가능합니다"}
+            return Response(data, status=status.HTTP_400_BAD_REQUEST)
         products.delete()
         data = {"message": f"{productId} 해당 상품이 삭제되었습니다"}
         return Response(data, status=status.HTTP_200_OK)

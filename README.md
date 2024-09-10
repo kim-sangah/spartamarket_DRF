@@ -7,7 +7,7 @@ Django DRF 장고 심화 개인 과제 프로젝트
 
 *** 
 <h3>초기 ERD 작성</h3>
-![ERD](static/spartamarket_DRF.jpg)
+![ERD](/static/spartamarket_DRF.jpg)
 ***
 
 <h3>기능 소개</h3>
